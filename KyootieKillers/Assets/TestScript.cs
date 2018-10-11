@@ -60,12 +60,7 @@ public class TestScript : MonoBehaviour
 
     void Update()
     {
-        //if (numToSpawn > numSpawned)
-        //{
-        //    //where your instantiated object spawns from
-        //    transform.position = new Vector3(0, 0, 0);
-        //    SpawnRandomObject();
-        //}
+   
     }
 
 }
