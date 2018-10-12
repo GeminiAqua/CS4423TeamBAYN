@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 95310299545462272}
   - component: {fileID: 114345446721581850}
   - component: {fileID: 195819094115046506}
+  - component: {fileID: 114384050542809766}
   m_Layer: 0
   m_Name: Unicorn61
   m_TagString: Untagged
@@ -1031,6 +1032,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &114384050542809766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1466755190788364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
 --- !u!137 &137280996164143730
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

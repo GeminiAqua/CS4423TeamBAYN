@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 95260169899342642}
   - component: {fileID: 114386783811105528}
   - component: {fileID: 195927934509793928}
+  - component: {fileID: 114267131245515898}
   m_Layer: 0
   m_Name: Unicorn46
   m_TagString: Untagged
@@ -1019,6 +1020,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114267131245515898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288366920101958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
 --- !u!114 &114386783811105528
 MonoBehaviour:
   m_ObjectHideFlags: 1

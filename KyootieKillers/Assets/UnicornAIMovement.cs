@@ -22,4 +22,11 @@ public class UnicornAIMovement : MonoBehaviour {
         animator.SetBool("isRunning", true);
         animator.SetInteger("animation", 5);
     }
+    void Attack(){
+        animator.SetBool("isRunning", false);
+        animator.SetInteger("animation", 8);
+    }
+    void Die(){
+        animator.SetInteger("animation", 10);
+    }
 }

@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 95097647443593938}
   - component: {fileID: 114068019083744266}
   - component: {fileID: 195018272792346930}
+  - component: {fileID: 114514127431326670}
   m_Layer: 0
   m_Name: Unicorn45
   m_TagString: Untagged
@@ -1031,6 +1032,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &114514127431326670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1406143316378826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
 --- !u!137 &137051595147607138
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

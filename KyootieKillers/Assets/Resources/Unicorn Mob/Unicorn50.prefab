@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 95894846567165130}
   - component: {fileID: 114840893667206636}
   - component: {fileID: 195059831600307640}
+  - component: {fileID: 114123723688261056}
   m_Layer: 0
   m_Name: Unicorn50
   m_TagString: Untagged
@@ -1019,6 +1020,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114123723688261056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1093316653406130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
 --- !u!114 &114840893667206636
 MonoBehaviour:
   m_ObjectHideFlags: 1
