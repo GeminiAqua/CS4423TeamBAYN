@@ -7,11 +7,13 @@ public class UnicornAIMovement : MonoBehaviour {
     public Transform target;
     UnityEngine.AI.NavMeshAgent agent;
     Animator animator;
+    Health health;
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>(); // the agent component of
+        health = GetComponent<Health>();
     }
     void Update()
     {
@@ -28,5 +30,11 @@ public class UnicornAIMovement : MonoBehaviour {
     }
     void Die(){
         animator.SetInteger("animation", 10);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Weapon")){
+            health.DecrementHealth(10);
+        }
     }
 }

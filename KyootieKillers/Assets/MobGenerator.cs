@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class MobGenerator : MonoBehaviour
 {
 
     //define a list
@@ -13,6 +13,7 @@ public class TestScript : MonoBehaviour
     Vector3 startPosition;
     public Transform minExtent;
     public Transform maxExtent;
+    public Camera m_Camera;
 
 
     void Start()
@@ -54,6 +55,7 @@ public class TestScript : MonoBehaviour
                 Random.Range(minExtent.position.z, maxExtent.position.z));
 
         myObj = Instantiate(myListObjects[whichItem], pos, transform.rotation) as GameObject;
+        myObj.GetComponent<CameraFacingBillboard>().SetCamera(m_Camera);
 
         //myObj.transform.position = pos;
     }
