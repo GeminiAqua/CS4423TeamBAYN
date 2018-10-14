@@ -14,10 +14,15 @@ public class MobGenerator : MonoBehaviour
     public Transform minExtent;
     public Transform maxExtent;
     public Camera m_Camera;
+    private CameraFacingBillboard cfb;
 
 
     void Start()
     {
+        if (m_Camera = null){
+            m_Camera = GetComponent<Camera>();
+        }
+      
         Random.seed = (int)Time.time;
         //Important note: place your prefabs folder(or levels or whatever) 
         //in a folder called "Resources" like this "Assets/Resources/Prefabs"
@@ -55,7 +60,8 @@ public class MobGenerator : MonoBehaviour
                 Random.Range(minExtent.position.z, maxExtent.position.z));
 
         myObj = Instantiate(myListObjects[whichItem], pos, transform.rotation) as GameObject;
-        myObj.GetComponent<CameraFacingBillboard>().SetCamera(m_Camera);
+       
+       // cfb.SetCamera(m_Camera);
 
         //myObj.transform.position = pos;
     }

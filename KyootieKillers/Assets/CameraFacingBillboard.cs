@@ -12,8 +12,9 @@ public class CameraFacingBillboard : MonoBehaviour
         transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
             m_Camera.transform.rotation * Vector3.up);
     }
-    public void SetCamera(Camera m_Camera)
+
+    private void Start()
     {
-        this.m_Camera = m_Camera;
+        this.m_Camera = Camera.main;
     }
 }

@@ -18,25 +18,12 @@ public class HealthBar : MonoBehaviour {
     /// </summary>
     private int actualValue;
 
-    public void OnHurt(int damage){
-
-        targetValue -= damage;
-        if (targetValue < 0)
-        {
-            targetValue = 0;
-        }
-        else if (targetValue > 100)
-        {
-            targetValue = 100;
-        }
-
-    }
-
 
     // Update is called once per frame
     void Update()
     {
         targetValue = health.GetHealth();
+     
         // Move health bar to its target
         if (actualValue < targetValue)
         {
