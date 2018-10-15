@@ -19,7 +19,7 @@ public class MobGenerator : MonoBehaviour
 
     void Start()
     {
-        if (m_Camera = null){
+        if (m_Camera == null){
             m_Camera = GetComponent<Camera>();
         }
       
@@ -68,7 +68,10 @@ public class MobGenerator : MonoBehaviour
 
     void Update()
     {
-   
+        // if (Time.timeSinceLevelLoad % 10f == 0f){
+            // Debug.Log("Spawned mob");
+            // SpawnRandomObject();
+        // }
     }
 
 }

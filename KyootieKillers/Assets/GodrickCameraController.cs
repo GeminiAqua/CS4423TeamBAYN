@@ -10,7 +10,7 @@ public class GodrickCameraController : MonoBehaviour {
     public float xTilt = 10;
     
     Vector3 destination = Vector3.zero;
-    GodrickController godrickController;
+    public GodrickController godrickController;
     float rotateVel = 0;
     
 	// Use this for initialization
@@ -20,8 +20,10 @@ public class GodrickCameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		MoveToTarget();
-        LookAtTarget();
+        if (godrickController.isAlive){
+            MoveToTarget();
+            LookAtTarget();
+        }
 	}
     
     // Can set new target if needed
