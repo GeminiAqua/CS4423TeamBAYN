@@ -11,7 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game Scenes/MenuScreen.unity
     guid: 23e5fb08587b940cf90b4a4d353db8db
-  - enabled: 1
+  - enabled: 0
     path: Assets/VersionControl.unity
     guid: d38040271a38bfa4b8e042476319bdf5
+  - enabled: 1
+    path: Assets/Game Scenes/Forest-Level1.unity
+    guid: 17846e251e3d3b442b3f3eba2f8eec17
+  - enabled: 1
+    path: Assets/Game Scenes/GameOverScreen.unity
+    guid: 77af6d71c9a2dc644bbff482702d7d8f
   m_configObjects: {}
