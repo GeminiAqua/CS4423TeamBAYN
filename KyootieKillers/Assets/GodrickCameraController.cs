@@ -8,6 +8,8 @@ public class GodrickCameraController : MonoBehaviour {
     public float lookSmooth = 0.09f;
     public Vector3 offsetFromTarget = new Vector3(0, 6, -8);
     public float xTilt = 10;
+    public float yTilt = 30;
+    public bool ToggleRotate;
     
     Vector3 destination = Vector3.zero;
     public GodrickController godrickController;
@@ -22,7 +24,9 @@ public class GodrickCameraController : MonoBehaviour {
 	void LateUpdate () {
         if (godrickController.isAlive){
             MoveToTarget();
-            LookAtTarget();
+            if (ToggleRotate == true){
+                LookAtTarget();
+            }
         }
 	}
     

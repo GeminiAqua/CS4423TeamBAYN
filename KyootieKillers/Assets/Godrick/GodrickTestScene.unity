@@ -112,7 +112,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 035d7616c76b66541b42419444405ba3, type: 2}
 --- !u!1 &184134911
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 184134914}
   - component: {fileID: 184134913}
   - component: {fileID: 184134912}
+  - component: {fileID: 184134915}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -183,13 +184,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 184134911}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 12, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &184134915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184134911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533c5291ee1cd1645bdece860d45a1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2054746420}
+  lookSmooth: 0.09
+  offsetFromTarget: {x: 0, y: 12, z: -11}
+  xTilt: 45
+  yTilt: 0
+  ToggleRotate: 0
+  godrickController: {fileID: 0}
 --- !u!1 &719334677
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +225,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!64 &719334678
 MeshCollider:
@@ -237,7 +256,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6de4296607a807f469ada92db8eea81b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -382,6 +401,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 3957e05eabeb69e4ead43e4b81b498d0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6b7343a05eb5f3640a7572859bfaeecb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3957e05eabeb69e4ead43e4b81b498d0, type: 3}
   m_IsPrefabAsset: 0
@@ -390,8 +413,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: 3957e05eabeb69e4ead43e4b81b498d0,
     type: 3}
   m_PrefabInternal: {fileID: 2054746414}
---- !u!64 &2054746416
-MeshCollider:
+--- !u!136 &2054746416
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -399,11 +422,10 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: 3957e05eabeb69e4ead43e4b81b498d0, type: 3}
+  m_Radius: 0.35
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &2054746417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -419,3 +441,58 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2054746418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054746415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a60dfa50e57ca64a99f8f19dfded7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: {fileID: 0}
+  isAlive: 1
+  isDamaging: 1
+  damageAmount: 50
+  takeDamageCooldown: 3
+  isInvincible: 0
+  timeLastTookDamage: 0
+  jumpInput: 0
+  moveLocation: {x: 0, y: 0, z: 0}
+  moveSetting:
+    forwardVel: 25
+    rotateVel: 100
+    jumpVel: 20
+    distToGround: 0.1
+    ground:
+      serializedVersion: 2
+      m_Bits: 4096
+  physSetting:
+    isGrounded: 0
+    downAccel: 1.4
+  inputSetting:
+    inputDelay: 0.1
+    TURN_AXIS: Horizontal
+    JUMP_AXIS: Jump
+    AUTO_ATTACK: Fire1
+    CLICK_MOVE: Fire2
+--- !u!4 &2054746420 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 3957e05eabeb69e4ead43e4b81b498d0,
+    type: 3}
+  m_PrefabInternal: {fileID: 2054746414}
+--- !u!114 &2054746421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054746415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
