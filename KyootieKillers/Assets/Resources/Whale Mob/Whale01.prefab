@@ -261,6 +261,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4011471541751912}
   - component: {fileID: 95762852408077632}
+  - component: {fileID: 114798369315675084}
+  - component: {fileID: 195473644289461638}
   m_Layer: 0
   m_Name: Whale01
   m_TagString: Untagged
@@ -552,6 +554,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114798369315675084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904210629174728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2330f378da53142a5a7178ae8fb07a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!137 &137922234217036242
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -615,3 +629,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.013640106, y: 0.103981614, z: -0.000016152859}
     m_Extent: {x: 0.72804326, y: 0.5954623, z: 0.57521933}
   m_DirtyAABB: 0
+--- !u!195 &195473644289461638
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904210629174728}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
