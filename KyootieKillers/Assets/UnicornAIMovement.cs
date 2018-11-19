@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,25 +25,47 @@ public class UnicornAIMovement : MonoBehaviour
         health = GetComponent<Health>();
         damageAmount = 10;
     }
+  
     void Update()
     {
-        if (health.GetHealth() <= 0)
+         if (health.GetHealth() <= 0)
         {
             Die();
-        } else {
-			agent.SetDestination(target.position); // move towards the target while avoiding things// move towards the target while avoiding things
+        }else{
+            FindPlayer();
+        }
+       
+    }
+
+    private void FindPlayer()
+    {
+        //get distance 
+        float dist = Vector3.Distance(transform.position, target.position);
+        agent.SetDestination(target.position);
+        if (dist <= agent.stoppingDistance)
+        {
+            Attack();// move towards the target while avoiding things// move towards the target while avoiding things
+        }
+        else if (dist > agent.stoppingDistance)
+        {
             Chasing();
         }
     }
+
     void Chasing()
     {
+
         //animator.SetBool("isRunning", true);
-        animator.SetInteger("animation", 5);
+       // animator.SetInteger("animation", 5);
+    animator.SetInteger("animation", 3);
+        animator.SetInteger("animation", 7);
     }
     void Attack()
     {
         //animator.SetBool("isRunning", false);
-        animator.SetInteger("animation", 8);
+
+        //animator.SetInteger("animation", 8);
+       
     }
     void Die()
     {
