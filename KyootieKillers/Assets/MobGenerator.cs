@@ -15,6 +15,7 @@ public class MobGenerator : MonoBehaviour
     public Transform maxExtent;
     public Camera m_Camera;
     private CameraFacingBillboard cfb;
+    public string MobType;
 
 
     void Start()
@@ -26,7 +27,7 @@ public class MobGenerator : MonoBehaviour
         Random.seed = (int)Time.time;
         //Important note: place your prefabs folder(or levels or whatever) 
         //in a folder called "Resources" like this "Assets/Resources/Prefabs"
-        Object[] subListObjects = Resources.LoadAll("Unicorn Mob", typeof(GameObject));
+        Object[] subListObjects = Resources.LoadAll(MobType, typeof(GameObject));
         //This may be sloppy (I've only been programing for a short time) 
         //It works though :) 
         foreach (GameObject subListObject in subListObjects)

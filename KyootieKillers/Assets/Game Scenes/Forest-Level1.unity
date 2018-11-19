@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -112,7 +112,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: a251ecfcf9f19e441b242de4799559b2, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1001 &7981536
 Prefab:
   m_ObjectHideFlags: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
   minExtent: {fileID: 1069906952}
   maxExtent: {fileID: 594537033}
   m_Camera: {fileID: 1087436836}
+  MobType: Unicorn Mob
 --- !u!4 &133255576
 Transform:
   m_ObjectHideFlags: 0
@@ -1299,6 +1300,9 @@ MonoBehaviour:
   takeDamageCooldown: 3
   isInvincible: 0
   timeLastTookDamage: 0
+  jumpInput: 0
+  moveLocation: {x: 0, y: 0, z: 0}
+  jumpLocation: {x: 0, y: 0, z: 0}
   moveSetting:
     forwardVel: 15
     rotateVel: 150
@@ -1312,10 +1316,10 @@ MonoBehaviour:
     downAccel: 2
   inputSetting:
     inputDelay: 0.1
-    FORWARD_AXIS: Vertical
     TURN_AXIS: Horizontal
     JUMP_AXIS: Jump
     AUTO_ATTACK: Fire1
+    CLICK_MOVE: Fire2
 --- !u!136 &202993376
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3516,6 +3520,8 @@ MonoBehaviour:
   lookSmooth: 0.01
   offsetFromTarget: {x: 0, y: 5, z: -8}
   xTilt: 25
+  yTilt: 30
+  ToggleRotate: 0
   godrickController: {fileID: 202993375}
 --- !u!81 &1087436835
 AudioListener:
@@ -3575,7 +3581,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
 --- !u!1 &1087535592
 GameObject:
