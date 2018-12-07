@@ -3,22 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnicornBeam : MonoBehaviour {
+public class UnicornBeam : MonoBehaviour
+{
     //public Transform startPoint;
-    public float range = 15f;
+    public float attackRange = 15f;
+    [SerializeField]
+    public int damagePerShot = 20;
     ParticleSystem laserParticles;
     LineRenderer laserLine;
     bool isShooting = false;
+    [SerializeField]
     float cooldown = 3f;
     float lastAttackTime = 0;
     float timer;
     Ray shootRay;
     RaycastHit shootHit;
     GameObject player;
+    Rigidbody rb;
+    Animator animator;
 
-   
+
     // Use this for initialization
     void Start () {
+        rb = GetComponentInParent<Rigidbody>();
+        animator = GetComponentInParent<Animator>();
         laserLine = GetComponentInChildren<LineRenderer>();
         laserParticles = GetComponentInChildren<ParticleSystem>();
         player = GameObject.FindWithTag("Player");
@@ -29,7 +37,7 @@ public class UnicornBeam : MonoBehaviour {
 	void Update () {
         timer += Time.deltaTime;
 
-        if(!isShooting && lastAttackTime <= Time.timeSinceLevelLoad - cooldown)
+        if(!isShooting && Vector3.Distance(rb.transform.position, player.transform.position) <= attackRange)
         {
             ShootBeam();
         }
@@ -47,6 +55,8 @@ public class UnicornBeam : MonoBehaviour {
    
     void ShootBeam()
     {
+        animator.SetInteger("animation", 3);
+        animator.SetInteger("animation", 7);
         lastAttackTime = Time.timeSinceLevelLoad;
         Debug.Log("IsShooting");
         // timer = 0f;
@@ -65,7 +75,7 @@ public class UnicornBeam : MonoBehaviour {
         //  Enable the line renderer and set it's first position to be the end of the gun.
         laserLine.enabled = true;
         laserLine.SetPosition(0, new Vector3(0,0,0));
-        laserLine.SetPosition(1, new Vector3(0, 15, range));
+        laserLine.SetPosition(1, new Vector3(0, 15, attackRange));
 
         // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
         shootRay.origin = laserLine.transform.position;
@@ -76,24 +86,25 @@ public class UnicornBeam : MonoBehaviour {
 
         Debug.DrawRay(shootRay.origin, shootRay.direction * 100f, Color.yellow,10);
         // Perform the raycast against gameobjects on the shootable layer and if it hits something...
-        if (Physics.Raycast(shootRay, out shootHit, range))
+        if (Physics.Raycast(shootRay, out shootHit, attackRange))
         {
 
-        //    // Try and find an EnemyHealth script on the gameobject hit.
-        //    Health playerHealth = shootHit.collider.GetComponent<Health>();
+            //    // Try and find an EnemyHealth script on the gameobject hit.
+            Health playerHealth = shootHit.collider.GetComponent<Health>();
             Debug.Log("Player Hit!!!: " + shootHit.collider);
-        //    // If the EnemyHealth component exist...
-        //    if (playerHealth != null)
-        //    {
-        //        Debug.Log("Enemy Health is null");
-        //        // ... the enemy should take damage.
-        //        playerHealth.DecrementHealth(damagePerShot);
-        //        //shootHit.point
-        //        //hitParticles.transform.position = hitPoint;
-        //        //hitParticles.Play();
+            //    // If the EnemyHealth component exist...
+            if (playerHealth != null)
+            {
+                //        Debug.Log("Enemy Health is null");
+                //        // ... the enemy should take damage.
+                playerHealth.DecrementHealth(damagePerShot);
+                //        //shootHit.point
+                //        //hitParticles.transform.position = hitPoint;
+                //        //hitParticles.Play();
 
 
             }
+        }
 
         //    // Set the second position of the line renderer to the point the raycast hit.
         //    gunLine.SetPosition(1, shootHit.point);
@@ -105,15 +116,22 @@ public class UnicornBeam : MonoBehaviour {
         //    gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         //    // Debug.Log("Missed enemy");
         //}
-        Invoke("DoneShooting", 2);
+        Invoke("DoneShooting", 0.5f);
 
     }
 
-    private void DoneShooting()
-    {
+     void DoneShooting()
 
-        isShooting = false;
+    {
+        Debug.Log("Done Shooting");
         DisableEffects();
+        StartCoroutine(WaitBeforeShooting());
         // cooldown = 3f;
+    }
+    IEnumerator WaitBeforeShooting(){
+        Debug.Log("Before wait");
+        yield return new WaitForSeconds(cooldown);
+        Debug.Log("Done waiting");
+        isShooting = false;
     }
 }
