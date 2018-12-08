@@ -66,7 +66,7 @@ public class UnicornBeam : MonoBehaviour
 
 
         // Play the laser shot audioclip.
-  
+        GetComponentInParent<AudioSource>().Play();
 
         // Stop the particles from playing if they were, then start the particles.
        // laserParticles.Stop();
