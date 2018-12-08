@@ -15,7 +15,8 @@ public class UnicornAIMovement : MonoBehaviour
     float damageCooldown = 1f;
     bool isDamaging;
     bool hasSpecialAttack = false;
-    
+
+
     void Start()
     {
         isDamaging = true;

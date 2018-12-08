@@ -16,6 +16,7 @@ public class MobGenerator : MonoBehaviour
     public Camera m_Camera;
     private CameraFacingBillboard cfb;
     public string MobType;
+    Object[] subListObjects;
 
 
     void Start()
@@ -27,9 +28,8 @@ public class MobGenerator : MonoBehaviour
         Random.seed = (int)Time.time;
         //Important note: place your prefabs folder(or levels or whatever) 
         //in a folder called "Resources" like this "Assets/Resources/Prefabs"
-        Object[] subListObjects = Resources.LoadAll(MobType, typeof(GameObject));
-        //This may be sloppy (I've only been programing for a short time) 
-        //It works though :) 
+        subListObjects = Resources.LoadAll(MobType, typeof(GameObject));
+       
         foreach (GameObject subListObject in subListObjects)
         {
             GameObject lo = (GameObject)subListObject;
@@ -48,7 +48,7 @@ public class MobGenerator : MonoBehaviour
     void SpawnRandomObject()
     {
         //spawns item in array position between 0 and 100
-        int whichItem = Random.Range(0, 10);
+        int whichItem = Random.Range(0, subListObjects.Length-1);
 
 
         GameObject myObj;
