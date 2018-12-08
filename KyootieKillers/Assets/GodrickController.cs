@@ -5,55 +5,100 @@ using UnityEngine;
 public class GodrickController : MonoBehaviour {
 
     [System.Serializable]
-    public class MoveSettings{
+    public class MoveSetting{
         public float forwardVel = 15;
         public float rotateVel = 100;
-        public float jumpVel = 25;
+        public float jumpVel = 50;
+        public float dashDist = 3f;
+        public float dashCD = 1f;
+        public float dashDuration = 0.9f;
         public float distToGround = 0.1f;
         public LayerMask ground;
     }
     
     [System.Serializable]
-    public class PhysSettings{
-        public bool isGrounded;
-        public float downAccel = 2f;
+    public class SkillCD{
+        public bool castingSpell = false;
+        public float one = 1f;
+        public float two = 1f;
+        public float three = 1f;
+        public float four = 1f;
+        public bool canCastOne = true;
+        public bool canCastTwo = true;
+        public bool canCastThree = true;
+        public bool canCastFour = true;
+        public bool oneRotate = false;
+        public float oneDuration = 2f;
     }
     
     [System.Serializable]
-    public class InputSettings{
+    public class SkillPrefab{
+        public GameObject two;
+        public GameObject three;
+        public GameObject four;
+    }
+    
+    [System.Serializable]
+    public class SkillOne{
+        public float XdegreesPerSecond = 0;
+        public float YdegreesPerSecond = 540;
+        public float ZdegreesPerSecond = 0;
+    }
+    
+    [System.Serializable]
+    public class PhysSetting{
+        public bool isGrounded;
+        public float downAccel = 15f;
+    }
+    
+    [System.Serializable]
+    public class InputSetting{
         public float inputDelay = 0.1f;
         public string TURN_AXIS = "Horizontal";
         public string JUMP_AXIS = "Jump";
         public string AUTO_ATTACK = "Fire1";
         public string CLICK_MOVE = "Fire2";
+        public string DASH = "Fire3";
+    }
+    
+    [System.Serializable]
+    public class ActionBool{
+        public bool isAlive = true;
+        public bool isInvincible;
+        public bool isMoving = false;
+        public bool isDashing = false;
+        public bool isJumping = false;
+        public bool canAttack = true;
+        public bool canDash = true;
     }
     
     public Health HP;
-    public bool isAlive = true;
-    public bool isDamaging = true;
     public int damageAmount = 50;
-    public float takeDamageCooldown = 3f;
-    public bool isInvincible;
+    public float takeDamageCooldown = 2f;
+    
     public float timeLastTookDamage = 0.0f;
 
     Animator anim;
-    // UnityEngine.AI.NavMeshAgent nmAgent;
-    bool isMoving = false;
-    bool isJumping = false;
+    
     Quaternion targetRotation;
     Rigidbody rBody;
-    float moveInput;
-    public float jumpInput;
-    float autoAttackInput;
     Vector3 velocity = Vector3.zero;
     public Vector3 moveLocation;
-    public Vector3 jumpLocation;
     bool userFirstClick = false;
     
     
-    public MoveSettings moveSetting = new MoveSettings();
-    public PhysSettings physSetting = new PhysSettings();
-    public InputSettings inputSetting = new InputSettings();
+    public MoveSetting moveSetting = new MoveSetting();
+    public SkillCD skillCD = new SkillCD();
+    public SkillOne skillOne = new SkillOne();
+    public SkillPrefab skillPrefab = new SkillPrefab();
+    public PhysSetting physSetting = new PhysSetting();
+    public InputSetting inputSetting = new InputSetting();
+    public ActionBool actionBool = new ActionBool();
+    
+    private float moveInput;
+    private float jumpInput;
+    private float autoAttackInput;
+    private float dashInput;
     
     public Quaternion TargetRotation{
         get {return targetRotation;}
@@ -66,7 +111,9 @@ public class GodrickController : MonoBehaviour {
         HP = GetComponent<Health>();
         anim = GetComponent<Animator>();
         anim.SetFloat("Velocity", 0);
-        // nmAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        skillPrefab.two = Resources.Load("SummonSword") as GameObject;
+        skillPrefab.three = Resources.Load("SummonGiant") as GameObject;
+        skillPrefab.four = Resources.Load("SummonUlt") as GameObject;
         if (GetComponent<Rigidbody>()){
             rBody = GetComponent<Rigidbody>();
         } else {
@@ -77,7 +124,7 @@ public class GodrickController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (isAlive){
+        if (actionBool.isAlive){
             GetInput();
             LookAtMouse();
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 2, Color.red);
@@ -89,19 +136,47 @@ public class GodrickController : MonoBehaviour {
 	}
     
     void FixedUpdate(){
-        if (isAlive){
-            Move();
-            Jump();
-            AutoAttack();
+        if (actionBool.isAlive){
+            if (skillCD.oneRotate){
+                SkillOneRotate();
+            }
+            if (!skillCD.castingSpell){
+                Move();
+                // Jump();
+                AutoAttack();
+                SkillAttacks();
+                Dash();
+            }
+            Grounded();
             
-            rBody.velocity = transform.TransformDirection(velocity);
+            // rBody.velocity = transform.TransformDirection(velocity);
         }
     }
     
     void GetInput(){
         moveInput = Input.GetAxis(inputSetting.CLICK_MOVE);
-        jumpInput = Input.GetAxis(inputSetting.JUMP_AXIS);
         autoAttackInput = Input.GetAxisRaw(inputSetting.AUTO_ATTACK);
+        // jumpInput = Input.GetAxisRaw(inputSetting.JUMP_AXIS);
+        dashInput = Input.GetAxisRaw(inputSetting.DASH);
+    }
+    
+    void Dash(){
+        if ( Input.GetKey("space") ) {
+            if (actionBool.canDash){
+                clearCanDash();
+                Invoke("setCanDash", moveSetting.dashCD);
+                
+                setIsDashing();
+                Invoke("clearIsDashing", moveSetting.dashDuration);
+            }
+        }
+        if (actionBool.isDashing){
+            anim.SetBool("Dash", true);
+            rBody.MovePosition(transform.position + transform.forward * Time.deltaTime * moveSetting.forwardVel * 2);
+            moveLocation = transform.position;
+        } else {
+            anim.SetBool("Dash", false);
+        }
     }
     
 	void Move(){
@@ -113,28 +188,36 @@ public class GodrickController : MonoBehaviour {
             int layerMask = 1 << 12;
             
             if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
-                moveLocation = new Vector3(hit.point.x, 0.1f, hit.point.z);
-                
+                moveLocation = new Vector3(hit.point.x, 0.1f, hit.point.z);   
             }
-        }
-        
-        
-        if (Vector3.Distance(moveLocation, transform.position) <= 0.03f){
-            isMoving = false;
-            anim.SetFloat("Velocity", 0f);
-        } else {
-            if (!isJumping){
-                transform.position = Vector3.MoveTowards(transform.position, moveLocation, Time.deltaTime * moveSetting.forwardVel);
-            } else {
-                jumpLocation = new Vector3(moveLocation.x, transform.position.y, moveLocation.z);
-                transform.position = Vector3.MoveTowards(transform.position, jumpLocation, Time.deltaTime * moveSetting.forwardVel);
-                // transform.position.x = Mathf.MoveTowards(transform.position.x, moveLocation.x, Time.deltaTime * moveSetting.forwardVel);
-                // transform.position.z = Mathf.MoveTowards(transform.position.z, moveLocation.z, Time.deltaTime * moveSetting.forwardVel);
+            
+            if (!actionBool.isDashing){
+                // if (!actionBool.isDashing){
+                    // transform.position = Vector3.MoveTowards(transform.position, moveLocation, Time.deltaTime * moveSetting.forwardVel);
+            rBody.MovePosition(transform.position + transform.forward * Time.deltaTime * moveSetting.forwardVel);
+            // rBody.AddForce(transform.forward * moveSetting.forwardVel);
+                // } else {
+                    // float xzMagnitude = (Mathf.Sqrt(Mathf.Abs(moveLocation.x) * Mathf.Abs(moveLocation.z)));
+                    // float xScaled = ( moveLocation.x / xzMagnitude ) * moveSetting.dashDist;
+                    // float zScaled = ( moveLocation.z / xzMagnitude ) * moveSetting.dashDist;
+                    // Debug.Log(hit.point.x);
+                    // Debug.Log(hit.point.z);
+                    // moveLocation = new Vector3( xScaled, 0.1f, zScaled);
+                // }
+            // } else {
+                // jumpLocation = new Vector3(moveLocation.x, transform.position.y, moveLocation.z);
+                // transform.position = Vector3.MoveTowards(transform.position, jumpLocation, Time.deltaTime * moveSetting.forwardVel);
+                /* // transform.position.x = Mathf.MoveTowards(transform.position.x, moveLocation.x, Time.deltaTime * moveSetting.forwardVel);
+                // // transform.position.z = Mathf.MoveTowards(transform.position.z, moveLocation.z, Time.deltaTime * moveSetting.forwardVel);
+                */
             }
-            isMoving = true;
+            actionBool.isMoving = true;
             anim.SetFloat("Velocity", moveSetting.forwardVel);
-        }
-        
+        } else {
+            actionBool.isMoving = false;
+            anim.SetFloat("Velocity", 0f);
+            // velocity = Vector3.zero;
+        }  
     }
     
     void LookAtMouse() {
@@ -142,20 +225,87 @@ public class GodrickController : MonoBehaviour {
             Vector3 relativePos = moveLocation - transform.position;
             Vector3 adjustPos = new Vector3(relativePos.x, 0, relativePos.z);
             
-            // float mouseX = Input.mousePosition.x;
-            // float mouseZ = Input.mousePosition.z;
-            // Vector3 adjustPos = new Vector3(mouseX, 0, mouseZ);
-            
-            Quaternion rotation = Quaternion.LookRotation(adjustPos, Vector3.up);
-            // if (Vector3.Distance(moveLocation, transform.position) >= 0.05f){
-            if ( (Mathf.Abs(moveLocation.x - transform.position.x) >= 0.05f) || (Mathf.Abs(moveLocation.z - transform.position.z) >= 0.05f)){
-                transform.rotation = rotation;
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            if ( (Mathf.Abs(moveLocation.x - transform.position.x) >= 0.25f) || (Mathf.Abs(moveLocation.z - transform.position.z) >= 0.25f)){
+                if (!actionBool.isDashing && !skillCD.oneRotate){
+                    transform.rotation = rotation;
+                }
             }
         }
     }
     
+    void SkillAttacks(){
+        if (Input.GetKey(KeyCode.A)){
+            if (skillCD.canCastOne){
+                skillCD.castingSpell = true;
+                UseSkillOne();
+            }
+        }
+        if (Input.GetKey(KeyCode.S)){
+            if (skillCD.canCastTwo){
+                skillCD.castingSpell = true;
+                UseSkillTwo();
+            }
+        }
+        if (Input.GetKey(KeyCode.D)){
+            if (skillCD.canCastThree){
+                skillCD.castingSpell = true;
+                UseSkillThree();
+            }
+        }
+        if (Input.GetKey(KeyCode.F)){
+            if (skillCD.canCastFour){
+                skillCD.castingSpell = true;
+                UseSkillFour();
+            }
+        }
+    }
+    
+    private void UseSkillOne(){
+        anim.SetTrigger("Skill1");
+        skillCD.oneRotate = true;
+        Invoke("endSkill1", skillCD.oneDuration);
+    }
+    
+    private void SkillOneRotate(){
+        transform.Rotate(Random.Range((skillOne.XdegreesPerSecond * Time.deltaTime)/2, skillOne.XdegreesPerSecond * Time.deltaTime), Random.Range((skillOne.YdegreesPerSecond * Time.deltaTime)/2, skillOne.YdegreesPerSecond * Time.deltaTime), Random.Range((skillOne.ZdegreesPerSecond * Time.deltaTime)/2, skillOne.ZdegreesPerSecond * Time.deltaTime));
+    }
+    
+    private void UseSkillTwo(){
+        skillCD.canCastTwo = false;
+        Invoke("setSkillTwoCD", skillCD.two);
+        anim.SetTrigger("Skill2");
+        GameObject missile1 = Instantiate(skillPrefab.two) as GameObject;
+        missile1.transform.forward = transform.forward;
+        missile1.transform.position = transform.position + new Vector3(0, 1, 0) + (transform.forward * 2.5f);
+    }
+    
+    private void UseSkillThree(){
+        skillCD.canCastThree = false;
+        Invoke("setSkillThreeCD", skillCD.three);
+        anim.SetTrigger("Skill3");
+        GameObject giant = Instantiate(skillPrefab.three) as GameObject;
+        giant.transform.forward = -transform.forward;
+        giant.transform.rotation = Quaternion.Euler(165, 90, 90);
+        giant.transform.position = transform.position + new Vector3(0, 30, 0) + (transform.forward * 10f);
+        
+    }
+    
+    private void UseSkillFour(){
+        skillCD.canCastFour = false;
+        Invoke("setSkillFourCD", skillCD.four);
+        anim.SetTrigger("Skill4");
+        GameObject ultimate = Instantiate(skillPrefab.four) as GameObject;
+        ultimate.transform.position = transform.position;
+    }
+    
     bool Grounded(){
-        physSetting.isGrounded = Physics.Raycast(transform.position, Vector3.down, moveSetting.distToGround, moveSetting.ground);
+        if (Physics.Raycast(transform.position, Vector3.down, moveSetting.distToGround, moveSetting.ground) || transform.position.y <= 0){
+            physSetting.isGrounded = true;
+        } else {
+            physSetting.isGrounded = false;
+        }
+        
         if (physSetting.isGrounded){
             anim.SetBool("Grounded", true);
         } else {
@@ -164,47 +314,119 @@ public class GodrickController : MonoBehaviour {
         return physSetting.isGrounded;
     }
     
-    void Jump(){
-        if ( (jumpInput > 0.05) && Grounded() ){
-            velocity.y = moveSetting.jumpVel;
-            isJumping = true;
-        } else if ( (jumpInput == 0)  && Grounded() ){
-            velocity.y = 0;
-            isJumping = false;
-        } else {
-            velocity.y -= physSetting.downAccel;
-            isJumping = true;
-        }
-    }
+    // void Jump(){
+        // if ( Grounded() ){
+            // if (Input.GetKey("space")){
+                // velocity.y = moveSetting.jumpVel;
+                // actionBool.isJumping = true;
+            // } else {
+                // velocity.y = 0;
+                // actionBool.isJumping = false;
+            // }
+        // } else {
+            // velocity.y -= physSetting.downAccel;
+            // actionBool.isJumping = true;
+        // }
+        
+        // if ( (jumpInput > 0) && Grounded()){
+            // setIsJumping();
+            // Invoke("clearIsJumping", 0.25f);
+        // }
+        
+        // if (actionBool.isJumping){
+            // velocity.y = moveSetting.jumpVel;
+        // } else {
+            // if (!Grounded()){
+                // velocity.y -= physSetting.downAccel;
+            // }
+        // }
+    // }
     
     void AutoAttack(){
-        if ( autoAttackInput > 0 && isDamaging){
+        if ( autoAttackInput > 0 && actionBool.canAttack){
             int layerMask = 1 << 10;
             anim.SetTrigger("AutoAttack");
-            isDamaging = false;
-            Invoke("canDamage", 0.25f);
-            
-            RaycastHit hit;
-            if (Physics.Raycast (transform.position, transform.TransformDirection(Vector3.forward), out hit, 2f, layerMask)) {
-                if (hit.transform.gameObject.tag.Equals("Enemy")){
-                    Debug.Log("Hit " + hit.transform.gameObject.name + "for " + damageAmount);
-                    hit.transform.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
-                }
-            }
+            actionBool.canAttack = false;
+            Invoke("setCanAttack", 0.25f);
         }
     }
     
-    void canDamage(){
-        isDamaging = true;
+    void setCanAttack(){
+        actionBool.canAttack = true;
+    }
+    
+    void clearCanAttack(){
+        actionBool.canAttack = false;
+    }
+    
+    void setCanDash(){
+        actionBool.canDash = true;
+    }
+    
+    void clearCanDash(){
+        actionBool.canDash = false;
+    }
+    
+    void setIsDashing(){
+        actionBool.isDashing = true;
+    }
+    
+    void clearIsDashing(){
+        actionBool.isDashing = false;
+    }
+    
+    void setIsJumping(){
+        actionBool.isJumping = true;
+    }
+    
+    void clearIsJumping(){
+        actionBool.isJumping = false;
+        jumpInput = 0f;
     }
     
     void recentlyTookDamage(){
-        isInvincible = true;
+        actionBool.isInvincible = true;
     }
     
     void checkAlive(){
         if (HP.currentHealth <= 0){
-            isAlive = false;
+            actionBool.isAlive = false;
         }
+    }
+    
+    public void clearCastingSpell(){
+        skillCD.castingSpell = false;
+    }
+    
+    public void endSkill1(){
+        anim.SetTrigger("Skill1End");
+        skillCD.oneRotate = false;
+        clearCastingSpell();
+        skillCD.canCastOne = false;
+        Invoke("setSkillOneCD", skillCD.one);
+    }
+    
+    private void setSkillOneCD(){
+        skillCD.canCastOne = true;
+    }
+    
+    private void setSkillTwoCD(){
+        skillCD.canCastTwo = true;
+    }
+    
+    private void setSkillThreeCD(){
+        skillCD.canCastThree = true;
+    }
+    
+    private void setSkillFourCD(){
+        skillCD.canCastFour = true;
+    }
+    
+    public bool getAliveBool(){
+        return actionBool.isAlive;
+    }
+    
+    public bool getCanAttackBool(){
+        return actionBool.canAttack;
     }
 }
