@@ -22,7 +22,7 @@ public class GodrickCameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        if (godrickController.isAlive){
+        if (godrickController.getAliveBool()){
             MoveToTarget();
             if (ToggleRotate == true){
                 LookAtTarget();
