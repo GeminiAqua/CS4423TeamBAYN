@@ -29,6 +29,7 @@ public class UnicornFastAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(Vector3.Distance(rb.transform.position, player.transform.position)<= attackRange){
+            
             Invoke("HornAttack", cooldown);
         }
     }
@@ -38,6 +39,10 @@ public class UnicornFastAttack : MonoBehaviour {
         if(originalPosition= null){
             originalPosition = rb.transform;
         }
+
+        //PLAY AUDIO SOURCE
+        //GetComponentInParent<AudioSource>().Play();
+
 
         animator.SetInteger("animation", 3);
         animator.SetInteger("animation", 7);
