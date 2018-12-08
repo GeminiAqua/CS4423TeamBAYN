@@ -12,7 +12,7 @@ public class DarkElfAI : MonoBehaviour {
     Animator animator;
     Health health;
     float damageCooldown = 1f;
-    bool isDamaging;
+    public bool isDamaging;
     bool hasSpecialAttack = false;
     public EnemyAttack attackType;
     DarkElfAttack daf;
@@ -109,26 +109,7 @@ public class DarkElfAI : MonoBehaviour {
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag.Equals("Player") && isDamaging)
-    //    {
-    //        float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
-    //        if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
-    //        {
-    //            Debug.Log("Player recently took damage. Can't deal damage yet");
-    //        }
-    //        else
-    //        {
-    //            collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
-             
-    //            int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
 
-    //            collision.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
-    //            Debug.Log(gameObject.name + " did " + damageAmount + " damage");
-    //        }
-    //    }
-    //}
     bool AnimationIsPlaying(string animation)
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName(animation);
