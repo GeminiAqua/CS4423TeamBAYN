@@ -19,7 +19,7 @@ public class SpellScript : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("TOOK DAMAGE");
+            Debug.Log("SPELL DAMAGE");
             Destroy(gameObject);
         }
     }

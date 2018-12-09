@@ -46,6 +46,7 @@ public class Health : MonoBehaviour
         }
         return true;
     }
+    
     public void resetHealthToStart()
     {
         this.currentHealth = startingHealth;

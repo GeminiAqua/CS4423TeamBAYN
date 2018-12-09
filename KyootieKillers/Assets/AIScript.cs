@@ -15,6 +15,7 @@ public class AIScript : MonoBehaviour {
     private float shootTimer = 0f;
     bool canShoot = false;
     bool playerFound = false;
+    public bool isShooter = false;
 
     public float ShootForce = 1;
 
@@ -55,7 +56,7 @@ public class AIScript : MonoBehaviour {
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
-                    Debug.Log("HIT DETECTED");
+                    //Debug.Log("HIT DETECTED");
                     player = hit.collider.gameObject;
                     playerFound = true;
                 }
@@ -72,12 +73,12 @@ public class AIScript : MonoBehaviour {
 
     IEnumerator SpellCast()
     {
-        Debug.Log("SpellCast CALLED");
+        //Debug.Log("SpellCast CALLED");
         canShoot = false;
         //playerFound = true;
         while (playerFound)
         {
-            Debug.Log("PLAYER FOUND");
+            //Debug.Log("PLAYER FOUND");
             GameObject s = Instantiate(spell, shootPoint.position, shootPoint.rotation);
             s.GetComponent<Rigidbody>().AddForce(transform.forward * ShootForce);
             yield return new WaitForSeconds(2);
@@ -85,4 +86,5 @@ public class AIScript : MonoBehaviour {
         }
         yield return null;
     }
+
 }

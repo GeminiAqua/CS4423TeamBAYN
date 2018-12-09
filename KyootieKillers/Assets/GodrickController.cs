@@ -26,9 +26,11 @@ public class GodrickController : MonoBehaviour {
         public bool canCastOne = true;
         public bool canCastTwo = true;
         public bool canCastThree = true;
-        public bool canCastFour = true;
+        public bool canCastFour = false;
         public bool oneRotate = false;
         public float oneDuration = 2f;
+        public int fourDamage = 100;
+        public float fourKBForce = 1000f;
     }
     
     [System.Serializable]
@@ -73,9 +75,9 @@ public class GodrickController : MonoBehaviour {
     }
     
     public Health HP;
+    public Mana SP;
     public int damageAmount = 50;
     public float takeDamageCooldown = 2f;
-    
     public float timeLastTookDamage = 0.0f;
 
     Animator anim;
@@ -109,6 +111,7 @@ public class GodrickController : MonoBehaviour {
         moveLocation = transform.position;
 		targetRotation = transform.rotation;
         HP = GetComponent<Health>();
+        SP = GetComponent<Mana>();
         anim = GetComponent<Animator>();
         anim.SetFloat("Velocity", 0);
         skillPrefab.two = Resources.Load("SummonSword") as GameObject;
@@ -293,10 +296,24 @@ public class GodrickController : MonoBehaviour {
     
     private void UseSkillFour(){
         skillCD.canCastFour = false;
-        Invoke("setSkillFourCD", skillCD.four);
+        SP.ConsumeMana();
         anim.SetTrigger("Skill4");
         GameObject ultimate = Instantiate(skillPrefab.four) as GameObject;
         ultimate.transform.position = transform.position;
+        SkillFourDoDamage();
+    }
+    
+    private void SkillFourDoDamage(){
+        Collider[] nearbyObjects;
+        nearbyObjects = Physics.OverlapSphere(gameObject.transform.position, 22);
+        foreach (Collider thing in nearbyObjects){
+            if ((thing.tag == "Enemy") || (thing.tag == "Boss")){
+                thing.gameObject.GetComponent<Health>().DecrementHealth(skillCD.fourDamage);
+            }
+            if (thing.tag == "Enemy"){
+                thing.gameObject.GetComponent<KnockbackScript>().KnockbackEnemy(gameObject, skillCD.fourKBForce);
+            }
+        }
     }
     
     bool Grounded(){
@@ -310,6 +327,7 @@ public class GodrickController : MonoBehaviour {
             anim.SetBool("Grounded", true);
         } else {
             anim.SetBool("Grounded", false);
+            rBody.AddForce(0, -50, 0, ForceMode.VelocityChange);
         }
         return physSetting.isGrounded;
     }
@@ -418,7 +436,7 @@ public class GodrickController : MonoBehaviour {
         skillCD.canCastThree = true;
     }
     
-    private void setSkillFourCD(){
+    public void setSkillFourCD(){
         skillCD.canCastFour = true;
     }
     
