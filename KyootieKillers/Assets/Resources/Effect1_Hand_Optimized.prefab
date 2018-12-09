@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198682911809142082}
   - component: {fileID: 199726355151335758}
   - component: {fileID: 114592329529185800}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4425476188777272}
   - component: {fileID: 108193627273104670}
   - component: {fileID: 114248463568651000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 54703482049119934}
   - component: {fileID: 114673983912765454}
   - component: {fileID: 65445067471296894}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Effect1_Hand_Optimized
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4946061387807558}
   - component: {fileID: 82858601335311150}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
