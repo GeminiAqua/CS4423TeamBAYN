@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellScript : MonoBehaviour {
-
+public class WhaleHornScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +16,11 @@ public class SpellScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log("COLIDE WITH", other.gameObject);
+        if (other.gameObject.tag.Equals("Player"))
         {
-            Debug.Log("SPELL DAMAGE");
-            Destroy(gameObject);
+            Debug.Log("HORN DAMAGE");
+            
         }
     }
 }
