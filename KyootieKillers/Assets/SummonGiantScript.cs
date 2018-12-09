@@ -6,9 +6,12 @@ public class SummonGiantScript : MonoBehaviour {
 
     public float dropCD = 1.5f;
     public float dropVelocity = 5f;
+    public int damage = 50;
     private float startTime;
     public bool isPostDone = false;
     public GameObject postObj;
+    public float effectRadius = 10f;
+    public Collider[] nearbyObjects;
     
 	void Start () {
         postObj = Resources.Load("SummonGiantPost") as GameObject;
@@ -39,6 +42,19 @@ public class SummonGiantScript : MonoBehaviour {
         rocks.transform.position = transform.position;
         rocks.transform.position = new Vector3(transform.position.x, -0.3f, transform.position.z);
         isPostDone = true;
+        GiantKnockback();
+    }
+    
+    private void GiantKnockback(){
+        nearbyObjects = Physics.OverlapSphere(gameObject.transform.position, effectRadius);
+        foreach (Collider thing in nearbyObjects){
+            if ((thing.tag == "Enemy") || (thing.tag == "Boss")){
+                thing.gameObject.GetComponent<Health>().DecrementHealth(damage);
+            }
+            if (thing.tag == "Enemy"){
+                thing.gameObject.GetComponent<KnockbackScript>().KnockbackEnemy(gameObject, 500f);
+            }
+        }
     }
 	
 }

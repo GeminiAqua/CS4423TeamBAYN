@@ -16,7 +16,7 @@ public class SummonSwordScript : MonoBehaviour {
     }
     
     private void OnTriggerEnter(Collider other){
-        if (other.tag.Equals("Enemy")){
+        if ( (other.tag.Equals("Enemy")) || (other.tag.Equals("Boss")) ){
             other.GetComponent<Health>().DecrementHealth(damageAmount);
         }
     }
