@@ -50,7 +50,7 @@ public class MobGenerator : MonoBehaviour
         //spawns item in array position between 0 and 100
         int whichItem = Random.Range(0, subListObjects.Length-1);
 
-
+        
         GameObject myObj;
        
 

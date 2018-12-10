@@ -229,7 +229,7 @@ public class GodrickController : MonoBehaviour {
             Vector3 adjustPos = new Vector3(relativePos.x, 0, relativePos.z);
             
             Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            if ( (Mathf.Abs(moveLocation.x - transform.position.x) >= 0.25f) || (Mathf.Abs(moveLocation.z - transform.position.z) >= 0.25f)){
+            if ( (Mathf.Abs(moveLocation.x - transform.position.x) >= 0.3f) || (Mathf.Abs(moveLocation.z - transform.position.z) >= 0.3f)){
                 if (!actionBool.isDashing && !skillCD.oneRotate){
                     transform.rotation = rotation;
                 }
@@ -290,7 +290,7 @@ public class GodrickController : MonoBehaviour {
         GameObject giant = Instantiate(skillPrefab.three) as GameObject;
         giant.transform.forward = -transform.forward;
         giant.transform.rotation = Quaternion.Euler(165, 90, 90);
-        giant.transform.position = transform.position + new Vector3(0, 30, 0) + (transform.forward * 10f);
+        giant.transform.position = transform.position + new Vector3(0, 30, 0) + (transform.forward * 15f);
         
     }
     
@@ -327,7 +327,9 @@ public class GodrickController : MonoBehaviour {
             anim.SetBool("Grounded", true);
         } else {
             anim.SetBool("Grounded", false);
-            rBody.AddForce(0, -50, 0, ForceMode.VelocityChange);
+            if (transform.position.y > 0.2){
+                rBody.AddForce(0, -50, 0, ForceMode.VelocityChange);
+            }
         }
         return physSetting.isGrounded;
     }

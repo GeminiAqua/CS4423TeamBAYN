@@ -149766,7 +149766,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 2.7666667
+  - time: 2.7
     functionName: clearCastingSpell
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 5a60dfa50e57ca64a99f8f19dfded7cb,

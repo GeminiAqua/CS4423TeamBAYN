@@ -27,16 +27,18 @@ public class UnicornAIMovement : MonoBehaviour
         health = GetComponent<Health>();
         damageAmount = 10;
     }
-  
+
     void Update()
     {
-         if (health.GetHealth() <= 0)
+        if (health.GetHealth() <= 0)
         {
             Die();
-        }else{
+        }
+        else
+        {
             FindPlayer();
         }
-       
+
     }
 
     private void FindPlayer()
@@ -57,9 +59,9 @@ public class UnicornAIMovement : MonoBehaviour
     void Chasing()
     {
 
-       
+
         animator.SetInteger("animation", 5);
-   
+
     }
     void Attack()
     {
@@ -72,11 +74,13 @@ public class UnicornAIMovement : MonoBehaviour
     }
     void Die()
     {
+
 		agent.Stop();
+
         agent.SetDestination(transform.position);
         animator.SetInteger("animation", 10);
 
-        if(AnimationIsPlaying("Die") == false)
+        if (AnimationIsPlaying("Die") == false)
         {
             StartCoroutine(WaitForAnimation());
 
@@ -93,10 +97,9 @@ public class UnicornAIMovement : MonoBehaviour
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
-    
-    void canDamage(){
+
+    void canDamage()
+    {
         isDamaging = true;
     }
 }
-
-
