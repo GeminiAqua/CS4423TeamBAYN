@@ -70,6 +70,7 @@ public class UnicornBossAI : MonoBehaviour
         //get distance 
         float dist = Vector3.Distance(transform.position, target.position);
         agent.SetDestination(target.position);
+        //agent.Warp(target.position);
         if (dist <= agent.stoppingDistance)
         {
             Attack();// move towards the target while avoiding things// move towards the target while avoiding things
