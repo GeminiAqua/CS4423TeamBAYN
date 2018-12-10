@@ -12,13 +12,13 @@ public class WaterTornadoDamageScript : MonoBehaviour {
     
 	void Start () {
         hitSound = GetComponent<AudioSource>();
-		lastHitTime = Time.time + delayTime;
+		lastHitTime = Time.timeSinceLevelLoad - delayTime;
 	}
 	
 	void OnTriggerEnter(Collider col){
         if (col.gameObject.tag == "Player"){
             if (Time.time > (lastHitTime + tickTime)){
-                lastHitTime = Time.time;
+                lastHitTime = Time.timeSinceLevelLoad;
                 col.gameObject.GetComponent<Health>().DecrementHealth(damage);
                 hitSound.Play();
                 Debug.Log("Player hit by TORNADO ENTER");
@@ -28,8 +28,8 @@ public class WaterTornadoDamageScript : MonoBehaviour {
     
     void OnTriggerStay(Collider col){
         if (col.gameObject.tag == "Player"){
-            if (Time.time > (lastHitTime + tickTime)){
-                lastHitTime = Time.time;
+            if (Time.timeSinceLevelLoad > (lastHitTime + tickTime)){
+                lastHitTime = Time.timeSinceLevelLoad;
                 col.gameObject.GetComponent<Health>().DecrementHealth(damage);
                 hitSound.Play();
                 Debug.Log("Player hit by TORNADO STAY");

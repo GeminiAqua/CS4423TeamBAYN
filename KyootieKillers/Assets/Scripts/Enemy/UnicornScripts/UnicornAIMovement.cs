@@ -33,7 +33,8 @@ public class UnicornAIMovement : MonoBehaviour
          if (health.GetHealth() <= 0)
         {
             Die();
-        }else{
+        }
+        if (Vector3.Distance(rBody.transform.position, target.transform.position) > agent.stoppingDistance){
             FindPlayer();
         }
        
@@ -44,12 +45,11 @@ public class UnicornAIMovement : MonoBehaviour
         //get distance 
         float dist = Vector3.Distance(transform.position, target.position);
         agent.SetDestination(target.position);
-        if (dist <= agent.stoppingDistance)
-        {
-            Attack();// move towards the target while avoiding things// move towards the target while avoiding things
-        }
-        else if (dist > agent.stoppingDistance)
-        {
+        // if (dist <= agent.stoppingDistance)
+        // {
+            // Attack();// move towards the target while avoiding things// move towards the target while avoiding things
+        // }
+        if (dist > agent.stoppingDistance) {
             Chasing();
         }
     }
