@@ -19,7 +19,7 @@ public class DarkElfAI : MonoBehaviour {
     public GameObject[] throwPoints;
     public int attackType;
     public float range;
-
+    public float daggerForce;
 
 
     float timer;
@@ -97,12 +97,14 @@ public class DarkElfAI : MonoBehaviour {
                 foreach(GameObject point in throwPoints)
                {
                     animator.SetTrigger("Attack2");
-                    
-                    GameObject s = Instantiate(dagger, point.transform.position, point.transform.rotation);
+
+                    GameObject temp = Instantiate(dagger) as GameObject;
+                    temp.transform.position = transform.position + new Vector3(0,0.5f, 1.5f);
+                    temp.transform.forward = transform.forward;
                   //  s.transform.Rotate(Vector3.left * 90);
 
-                    s.GetComponent<Rigidbody>().AddForce(s.transform.forward * 100);
-                 //s   Destroy(dagger, 10);
+                    temp.GetComponentInChildren<Rigidbody>().AddForce(temp.transform.forward * daggerForce);
+                    Destroy(temp, 10);
                    // rBody.velocity = s.transform.forward * 9;
                     //Instantiate(dagger);
                     // Instantiate(dagger, child.transform, child.rotation);

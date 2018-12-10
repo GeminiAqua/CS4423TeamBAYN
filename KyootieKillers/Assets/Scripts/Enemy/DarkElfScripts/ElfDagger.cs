@@ -29,8 +29,12 @@ public class ElfDagger : MonoBehaviour {
         this.elfPos = elfPos;
     }
     private void OnTriggerEnter(Collider other){
+        Debug.Log("Dagger collided");
         if ( other.tag.Equals("Player") ){
-            other.GetComponent<Health>().DecrementHealth(elf.damageAmount);
+            Debug.Log("with rodrick");
+            other.gameObject.GetComponent<Health>().DecrementHealth(elf.damageAmount);
+        
+
         }
     }
     

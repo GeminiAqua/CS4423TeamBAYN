@@ -21,9 +21,10 @@ public class DarkElfWeapon : MonoBehaviour {
     
    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("detected collision");
+        //Debug.Log("detected collision");
         if (other.gameObject.tag.Equals("Player") && darkElf.isDamaging)
         {
+            Debug.Log("damage Amount: "+ darkElf.damageAmount);
             float damageTime = other.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
             if (Time.timeSinceLevelLoad < (damageTime + other.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
             {
