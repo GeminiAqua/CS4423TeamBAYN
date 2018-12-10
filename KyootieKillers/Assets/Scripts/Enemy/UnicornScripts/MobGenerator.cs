@@ -86,12 +86,18 @@ public class MobGenerator : MonoBehaviour
 
         if (made)
         {
+            /*if(boss == null)
+            {
+                    LoadScene sm = GetComponent<LoadScene>();
+                    sm.LoadByIndex(2);
+            }*/
             return;
         }
         if(enemynum <= 0 && start)
         {
             Debug.Log("SPAWN BOSS");
             boss.SetActive(true);
+            boss.GetComponent<Health>().isBoss = true;
             made = true;
         }
     }
