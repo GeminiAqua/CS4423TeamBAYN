@@ -16,12 +16,14 @@ public class DarkElfAI : MonoBehaviour {
     bool hasSpecialAttack = false;
     //public EnemyAttack attackType;
     DarkElfAttack daf;
-
+    public GameObject[] throwPoints;
     public int attackType;
+    public float range;
 
 
 
     float timer;
+    public GameObject dagger;
 
 
     // Use this for initialization
@@ -33,6 +35,10 @@ public class DarkElfAI : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>(); // the agent component of
         health = GetComponent<Health>();
         damageAmount = 10;
+
+
+            agent.stoppingDistance = range;
+
     }
 	
 	// Update is called once per frame
@@ -74,25 +80,36 @@ public class DarkElfAI : MonoBehaviour {
     void Attack()
     {
         if(isDamaging == false){
-
-            if(attackType == 1){
+            animator.SetFloat("speed", 0f);
+            if (attackType == 1){
                 //Debug.Log("Should be attacking");
-                animator.SetFloat("speed", 0f);
+
 
                 Debug.Log("attacking in a1");
 
                 agent.isStopped = false;
 
                 animator.SetTrigger("Attack3");
-                isDamaging = true;
-                //animator.SetBool("isAttacking", false);
-                Invoke("canDamage", damageCooldown);
+               
             }
             else{
+                Debug.Log("attacking in a2");
+                foreach(GameObject point in throwPoints)
+               {
 
+                        Instantiate(dagger);
+                        // Instantiate(dagger, child.transform, child.rotation);
+                       // GameObject missile1 = Instantiate(skillPrefab.two) as GameObject;
+                        dagger.transform.forward = transform.forward;
+                        dagger.transform.position = transform.position + new Vector3(0, 1, 0) + (transform.forward * 2.5f);
+
+                }
             }
+            isDamaging = true;
+            //animator.SetBool("isAttacking", false);
+            Invoke("canDamage", damageCooldown);
 
-           
+
         }
     }
 
