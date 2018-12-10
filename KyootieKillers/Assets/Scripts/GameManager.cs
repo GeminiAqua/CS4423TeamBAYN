@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
                 enemyCount = 10;
 
             }
-            enemyCountLabel.text = "Enemies: " + (enemyCount + 1);
+            enemyCountLabel.text = "Enemies:n " + (enemyCount + 1);
         }
     }
     public void ExitLevel(){
