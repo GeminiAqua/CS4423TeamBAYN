@@ -17,6 +17,7 @@ public class UnicornFastAttack : MonoBehaviour {
     private Health HP;
     private float baseSpeed;
     private bool alreadyInvoked = false;
+    bool alive = true;
 
     void Start () {
         animator = GetComponent<Animator>();
@@ -112,7 +113,8 @@ public class UnicornFastAttack : MonoBehaviour {
     
     void Die()
     {
-		agent.Stop();
+        
+        agent.Stop();
         agent.SetDestination(transform.position);
         animator.SetInteger("animation", 10);
 
@@ -130,6 +132,8 @@ public class UnicornFastAttack : MonoBehaviour {
     private IEnumerator WaitForAnimation()
     {
         yield return new WaitForSeconds(3);
+        GameObject gen = GameObject.FindGameObjectWithTag("GameController");
+        gen.GetComponent<MobGenerator>().enemynum--;
         Destroy(gameObject);
     }
     

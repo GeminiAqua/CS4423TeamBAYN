@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     public int startingHealth = 100;
     public int currentHealth;
     public bool immune;
+    public bool isBoss = false;
 
 
     // Use this for initialization
