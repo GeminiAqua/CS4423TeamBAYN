@@ -46,13 +46,10 @@ public class ColorCollisionPoint : MonoBehaviour {
 				onFlower = true;
 				if(startTime >= timeToStay) {
 
-				//StartCoroutine(StartCountdown());
 				unicornBoss.GetComponent<UnicornBossAI>().incrementColorIndex();
-				//if(unicornBoss.GetComponent<UnicornBossAI>().checkIfFinished() != 0) {
 				unicornBoss.GetComponent<UnicornBossAI>().setColor();
 				unicornBoss.GetComponent<UnicornBossAI>().PickColor();
 				unicornBoss.GetComponent<UnicornBossAI>().setActiveColor();
-				//}
 				cooldown = true;
 				Debug.Log("UR STANDING IN "+color+" BOSS COLOR "+bossColor);
 				startTimeCooldown = 0.0;
@@ -64,17 +61,6 @@ public class ColorCollisionPoint : MonoBehaviour {
 			}
 		}
 	}
-
- public IEnumerator StartCountdown(float countdownValue = 3)
- {
-     currCountdownValue = countdownValue;
-     while (currCountdownValue > 0)
-     {
-         Debug.Log("Countdown: " + currCountdownValue);
-         yield return new WaitForSeconds(1.0f);
-         currCountdownValue--;
-     }
- }
 
 	void OnTriggerExit(Collider other)
  	{
