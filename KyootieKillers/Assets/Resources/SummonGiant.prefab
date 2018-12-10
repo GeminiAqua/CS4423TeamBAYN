@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropCD: 0.5
   dropVelocity: 50
-  damage: 50
+  damage: 150
   isPostDone: 0
   postObj: {fileID: 0}
   effectRadius: 10
