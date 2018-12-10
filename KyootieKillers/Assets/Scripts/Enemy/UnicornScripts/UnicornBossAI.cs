@@ -6,6 +6,19 @@ using UnityEngine;
 public class UnicornBossAI : MonoBehaviour
 {
 
+    //public GameObject flower;
+
+    //public GameObject colorIndicator;
+    
+    public GameObject[] possibleColors;
+    public string[] colorNames = {"green", "yellow", "blue", "red", "purple", "stop", "stop", "stop"};
+    public string currentColor = "green";
+    public static int colorIndex;
+    //public GameObject z = null;
+    
+    //public GameObject[] nodes;
+
+
     public Transform target;
     public int damageAmount;
     public Rigidbody rBody;
@@ -16,8 +29,13 @@ public class UnicornBossAI : MonoBehaviour
     bool isDamaging;
     bool hasSpecialAttack = false;
 
+    bool immune = false;
+    int healthVar;
+
     void Start()
     {
+        colorIndex = 0;
+
         isDamaging = true;
         animator = gameObject.GetComponent<Animator>();
         rBody = GetComponent<Rigidbody>();
@@ -25,6 +43,8 @@ public class UnicornBossAI : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>(); // the agent component of
         health = GetComponent<Health>();
         damageAmount = 10;
+        PickColor();
+        Debug.Log("GAMEOBJECT"+gameObject.transform.position);
     }
 
     void Update()
@@ -32,10 +52,15 @@ public class UnicornBossAI : MonoBehaviour
         if (health.GetHealth() <= 0)
         {
             Die();
-        }
+        }else if(health.GetHealth() <=900 && health.GetHealth() > 700) {
+            //Debug.Log(health.GetHealth());
+            health.beImmune();
+            
+        } 
         else
         {
             FindPlayer();
+            //Debug.Log("NOT IMMUNE "+health.GetHealth());
         }
 
     }
@@ -57,10 +82,7 @@ public class UnicornBossAI : MonoBehaviour
 
     void Chasing()
     {
-
-
         animator.SetInteger("animation", 5);
-
     }
     void Attack()
     {
@@ -88,7 +110,7 @@ public class UnicornBossAI : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Weapon"))
         {
-            // Debug.Log("there is a collision with" + collision.gameObject);
+            Debug.Log("there is a collision with" + collision.gameObject);
             health.DecrementHealth(10);
         }
     }
@@ -126,10 +148,62 @@ public class UnicornBossAI : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void canDamage()
-    {
-        isDamaging = true;
+
+
+    public void PickColor() {
+        GameObject z = Instantiate(possibleColors[colorIndex], gameObject.transform);
+        Debug.Log(currentColor);
+
     }
+
+    public string getColor() {
+        return currentColor;
+    }
+
+    public void setColor() {
+        currentColor = colorNames[colorIndex];
+        Debug.Log(colorIndex);
+    }
+
+    public void incrementColorIndex(){
+        colorIndex++;
+    }
+
+    public void setActiveColor(){
+        if(colorIndex == 1) {
+            GameObject x = GameObject.Find("GreenIndicator(Clone)");
+            x.SetActive(false);
+        }
+        if(colorIndex == 2) {
+            GameObject x = GameObject.Find("YellowIndicator(Clone)");
+            x.SetActive(false);
+        }
+        if(colorIndex == 3) {
+            GameObject x = GameObject.Find("BlueIndicator(Clone)");
+            x.SetActive(false);
+        }
+        if(colorIndex == 4) {
+            GameObject x = GameObject.Find("RedIndicator(Clone)");
+            x.SetActive(false);
+        }
+        if(colorIndex == 5) {
+            GameObject x = GameObject.Find("PurpleIndicator(Clone)");
+            x.SetActive(false);
+            health.beNotImmune();
+            health.DecrementHealth(300);
+            GameObject flowerPoint = GameObject.Find("FlowerPoint");
+            flowerPoint.SetActive(false);
+            GameObject flowerPoint1 = GameObject.Find("FlowerPoint (1)");
+            flowerPoint1.SetActive(false);
+            GameObject flowerPoint2 = GameObject.Find("FlowerPoint (2)");
+            flowerPoint2.SetActive(false);
+            GameObject flowerPoint3 = GameObject.Find("FlowerPoint (3)");
+            flowerPoint3.SetActive(false);
+            GameObject flowerPoint4 = GameObject.Find("FlowerPoint (4)");
+            flowerPoint4.SetActive(false);
+        }
+    }
+    
 }
 
 
