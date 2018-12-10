@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour {
 
 	public GameObject impactEffect;
 
-	public GameObject bulletEffect;
 
 	public bool seek = false;
 	private double startTime = 0.0;
@@ -59,7 +58,7 @@ public class Bullet : MonoBehaviour {
 		//Destroy(effectInstance, 2f);
 
 
-		//Damage(target);
+
 		Debug.Log("hit");
 		seek = false;
 		Destroy(gameObject);
