@@ -7,20 +7,25 @@ public class WeaponScript : MonoBehaviour {
     public GodrickController hero;
     public bool canDamage;
     public int damageAmount = 50;
+    private float lastHit;
+    private float cooldown = 0.1f;
+    private AudioSource hitSound;
 
-	// Use this for initialization
 	void Start () {
-        // damageAmount = 50;
+        hitSound = GetComponent<AudioSource>();
+        lastHit = Time.timeSinceLevelLoad - cooldown;
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () {
 		canDamage = hero.getCanAttackBool();
 	}
     
     private void OnTriggerEnter(Collider other){
-        if (other.tag.Equals("Enemy")){
-            other.GetComponent<Health>().DecrementHealth(damageAmount);
+        if (other.tag.Equals("Enemy") || other.tag.Equals("Boss")){
+            if (Time.timeSinceLevelLoad > (lastHit + cooldown)){
+                hitSound.Play();
+                other.GetComponent<Health>().DecrementHealth(damageAmount);
+            }
         }
             
     }

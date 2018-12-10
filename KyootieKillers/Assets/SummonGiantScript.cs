@@ -12,9 +12,11 @@ public class SummonGiantScript : MonoBehaviour {
     public GameObject postObj;
     public float effectRadius = 10f;
     public Collider[] nearbyObjects;
+    private AudioSource hitSound;
     
 	void Start () {
         postObj = Resources.Load("SummonGiantPost") as GameObject;
+        hitSound = GetComponent<AudioSource>();
 		Invoke("FallToZero", dropCD);
         startTime = Time.time;
         Invoke("Post", 1f);
@@ -42,6 +44,7 @@ public class SummonGiantScript : MonoBehaviour {
         rocks.transform.position = transform.position;
         rocks.transform.position = new Vector3(transform.position.x, -0.3f, transform.position.z);
         isPostDone = true;
+        hitSound.Play();
         GiantKnockback();
     }
     
