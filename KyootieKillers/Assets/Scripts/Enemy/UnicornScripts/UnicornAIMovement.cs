@@ -45,11 +45,21 @@ public class UnicornAIMovement : MonoBehaviour
         //get distance 
         float dist = Vector3.Distance(transform.position, target.position);
         agent.SetDestination(target.position);
+<<<<<<< HEAD
         // if (dist <= agent.stoppingDistance)
         // {
             // Attack();// move towards the target while avoiding things// move towards the target while avoiding things
         // }
         if (dist > agent.stoppingDistance) {
+=======
+        //agent.Warp(target.position);
+        if (dist <= agent.stoppingDistance)
+        {
+            Attack();// move towards the target while avoiding things// move towards the target while avoiding things
+        }
+        else if (dist > agent.stoppingDistance)
+        {
+>>>>>>> d2400192d914612dd46d4b4e7233cebce02d335f
             Chasing();
         }
     }

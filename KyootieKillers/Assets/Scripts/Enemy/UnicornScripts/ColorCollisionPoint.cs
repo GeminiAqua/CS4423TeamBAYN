@@ -18,8 +18,12 @@ public class ColorCollisionPoint : MonoBehaviour {
 	bool onFlower = false;
 	bool cooldown = false;
 
+    public float lastHitTime;
+    public float tickTime = 1f;
+    public int damage = 10;
+    public float delayTime = 2f;
 
-	void Start () {
+    void Start () {
 		unicornBoss = GameObject.Find("Boss1");
 	}
 
@@ -56,8 +60,13 @@ public class ColorCollisionPoint : MonoBehaviour {
 				}
 			} else if (cooldown == false)
 			{
-				
-				Debug.Log("WRONG COLOR, TAKE DAMAGE");
+                if (Time.time > (lastHitTime + tickTime))
+                {
+                    Debug.Log("WRONG COLOR, TAKE DAMAGE");
+                    lastHitTime = Time.time;
+                    c.gameObject.GetComponent<Health>().DecrementHealth(damage);
+                }
+                    
 			}
 		}
 	}
