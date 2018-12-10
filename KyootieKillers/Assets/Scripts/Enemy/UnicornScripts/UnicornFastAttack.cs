@@ -16,7 +16,7 @@ public class UnicornFastAttack : MonoBehaviour {
     bool isAttacking = false;
     private bool playerHit = false;
     Animator animator;
-
+    UnicornAIMovement unicorn; 
 
 
     // Use this for initialization
@@ -24,6 +24,7 @@ public class UnicornFastAttack : MonoBehaviour {
         animator = GetComponentInParent<Animator>();
         player = GameObject.FindWithTag("Player");
         rb = GetComponentInParent<Rigidbody>();
+
     }
 	
 	// Update is called once per frame
@@ -84,28 +85,28 @@ public class UnicornFastAttack : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected void OnCollisionEnter(Collision collision)
     {
         //Decrement Health
         //Debug.Log("Decrement Health");
-        //if (collision.gameObject.tag.Equals("Player") && isDamaging)
-        //{
-        //    float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
-        //    if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
-        //    {
-        //        Debug.Log("Player recently took damage. Can't deal damage yet");
-        //    }
-        //    else
-        //    {
-        //        collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
-        //        isDamaging = false;
-        //        Invoke("canDamage", damageCooldown);
-        //        Attack();
-        //        int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
+        if (collision.gameObject.tag.Equals("Player") )
+        {
+            float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
+            if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
+            {
+                Debug.Log("Player recently took damage. Can't deal damage yet");
+            }
+            else
+            {
+                collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
+                unicorn.isDamaging = false;
+                Invoke("canDamage", unicorn.damageCooldown);
+               // Attack();
+                int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
 
-        //        collision.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
-        //        Debug.Log(gameObject.name + " did " + damageAmount + " damage");
-        //    }
-        //}
+                collision.gameObject.GetComponent<Health>().DecrementHealth(unicorn.damageAmount);
+                Debug.Log(gameObject.name + " did " + unicorn.damageAmount + " damage");
+            }
+        }
     }
 }

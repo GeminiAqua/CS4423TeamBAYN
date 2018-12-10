@@ -7,7 +7,7 @@ public class DarkElfAI : MonoBehaviour {
 
     public Transform target;
     public int damageAmount;
-    public Rigidbody rBody;
+    Rigidbody rBody;
     NavMeshAgent agent;
     Animator animator;
     Health health;
@@ -96,17 +96,24 @@ public class DarkElfAI : MonoBehaviour {
                 Debug.Log("attacking in a2");
                 foreach(GameObject point in throwPoints)
                {
+                    animator.SetTrigger("Attack2");
+                    
+                    GameObject s = Instantiate(dagger, point.transform.position, point.transform.rotation);
+                  //  s.transform.Rotate(Vector3.left * 90);
 
-                        Instantiate(dagger);
-                        // Instantiate(dagger, child.transform, child.rotation);
-                       // GameObject missile1 = Instantiate(skillPrefab.two) as GameObject;
-                        dagger.transform.forward = transform.forward;
-                        dagger.transform.position = transform.position + new Vector3(0, 1, 0) + (transform.forward * 2.5f);
+                    s.GetComponent<Rigidbody>().AddForce(s.transform.forward * 100);
+                 //s   Destroy(dagger, 10);
+                   // rBody.velocity = s.transform.forward * 9;
+                    //Instantiate(dagger);
+                    // Instantiate(dagger, child.transform, child.rotation);
+                    // GameObject missile1 = Instantiate(skillPrefab.two) as GameObject;
+                    // dagger.transform.forward = transform.forward;
+                    //  dagger.transform.position = transform.position + new Vector3(0, 1, 0) + (transform.forward * 2.5f);
 
                 }
             }
             isDamaging = true;
-            //animator.SetBool("isAttacking", false);
+            animator.SetBool("isAttacking", false);
             Invoke("canDamage", damageCooldown);
 
 

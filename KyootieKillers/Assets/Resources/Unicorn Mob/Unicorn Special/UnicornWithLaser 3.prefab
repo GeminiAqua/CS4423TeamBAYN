@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 136324342523759750}
   - component: {fileID: 82496442555627472}
   m_Layer: 10
-  m_Name: UnicornWithLaser
+  m_Name: UnicornWithLaser 3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,8 +12,8 @@ public class UnicornAIMovement : MonoBehaviour
     UnityEngine.AI.NavMeshAgent agent;
     Animator animator;
     Health health;
-    float damageCooldown = 1f;
-    bool isDamaging;
+    public float damageCooldown = 1f;
+    public bool isDamaging;
     bool hasSpecialAttack = false;
 
 
