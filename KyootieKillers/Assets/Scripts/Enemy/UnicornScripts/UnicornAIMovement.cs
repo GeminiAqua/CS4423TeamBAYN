@@ -73,7 +73,6 @@ public class UnicornAIMovement : MonoBehaviour
     void Die()
     {
 		agent.Stop();
-      //  Destroy(rBody);
         agent.SetDestination(transform.position);
         animator.SetInteger("animation", 10);
 
