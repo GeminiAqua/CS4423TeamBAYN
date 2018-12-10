@@ -102,7 +102,12 @@ public class UnicornAIMovement : MonoBehaviour
             GameObject gen = GameObject.FindGameObjectWithTag("GameController");
             gen.GetComponent<MobGenerator>().enemynum--;
         }
-        Destroy(gameObject);
+        if (gameObject.tag.Equals("Boss"))
+        {
+            LoadScene sm = GetComponent<LoadScene>();
+            sm.LoadByIndex(2);
+        }
+        Destroy(gameObject,1f);
     }
 
     void canDamage()

@@ -384,6 +384,17 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1969390050163586, guid: a3f7264b9aa05724aae22ed55d862176,
     type: 2}
   firePoint: {fileID: 130204209}
+--- !u!114 &130204204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 130204201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf11ab6ad1d384f48bad9efa3999e857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &130204209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4996062165953646, guid: 67d80c4b83355e441b6d3a0f5be1a259,
@@ -2636,6 +2647,15 @@ Prefab:
     - target: {fileID: 1597672813510964, guid: 67d80c4b83355e441b6d3a0f5be1a259, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114356129224710692, guid: 67d80c4b83355e441b6d3a0f5be1a259,
+        type: 2}
+      propertyPath: isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1597672813510964, guid: 67d80c4b83355e441b6d3a0f5be1a259, type: 2}
+      propertyPath: m_TagString
+      value: Boss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d80c4b83355e441b6d3a0f5be1a259, type: 2}
