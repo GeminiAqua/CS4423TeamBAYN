@@ -22,20 +22,20 @@ public class DarkElfWeapon : MonoBehaviour {
    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("detected collision");
-        if (collision.gameObject.tag.Equals("Player") && darkElf.isDamaging)
+        if (other.gameObject.tag.Equals("Player") && darkElf.isDamaging)
         {
-            float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
-            if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
+            float damageTime = other.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
+            if (Time.timeSinceLevelLoad < (damageTime + other.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
             {
                 Debug.Log("Player recently took damage. Can't deal damage yet");
             }
             else
             {
-                collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
+                other.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
              
-                int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
+                int playeHealth = other.gameObject.GetComponent<Health>().GetHealth();
 
-                collision.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
+                other.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
                 Debug.Log(gameObject.name + " did " + damageAmount + " damage");
             }
         }

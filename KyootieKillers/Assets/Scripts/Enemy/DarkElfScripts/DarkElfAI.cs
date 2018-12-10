@@ -14,8 +14,12 @@ public class DarkElfAI : MonoBehaviour {
     float damageCooldown = 1f;
     public bool isDamaging;
     bool hasSpecialAttack = false;
-    public EnemyAttack attackType;
+    //public EnemyAttack attackType;
     DarkElfAttack daf;
+
+    public int attackType;
+
+
 
     float timer;
 
@@ -70,19 +74,24 @@ public class DarkElfAI : MonoBehaviour {
     void Attack()
     {
         if(isDamaging == false){
-            //Debug.Log("Should be attacking");
-            animator.SetFloat("speed", 0f);
-            //daf = new DarkElfAttack(attackType);
-            //daf.executeAttack();
-            Debug.Log("attacking in a1");
-            // agent.stoppingDistance = 3f;
-            agent.isStopped = false;
-            //animator.SetInteger("attack", 3);
-            //animator.SetTrigger("stopMovement");
-            animator.SetTrigger("Attack3");
-            isDamaging = true;
-            //animator.SetBool("isAttacking", false);
-            Invoke("canDamage", damageCooldown);
+
+            if(attackType == 1){
+                //Debug.Log("Should be attacking");
+                animator.SetFloat("speed", 0f);
+
+                Debug.Log("attacking in a1");
+
+                agent.isStopped = false;
+
+                animator.SetTrigger("Attack3");
+                isDamaging = true;
+                //animator.SetBool("isAttacking", false);
+                Invoke("canDamage", damageCooldown);
+            }
+            else{
+
+            }
+
            
         }
     }
@@ -125,4 +134,5 @@ public class DarkElfAI : MonoBehaviour {
     {
         isDamaging = false;
     }
+ 
 }
