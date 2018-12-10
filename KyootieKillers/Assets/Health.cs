@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     public int startingHealth = 100;
     public int currentHealth;
+    public bool immune;
 
 
     // Use this for initialization
@@ -34,8 +35,13 @@ public class Health : MonoBehaviour
             resetHealthToStart();
     }
     public void DecrementHealth(int decrementValue)
-    {
-        this.currentHealth -= decrementValue;
+    {   
+        if(immune == false)
+            this.currentHealth -= decrementValue;
+        else
+        {
+            return;
+        }
     }
 
     public bool isHealthfull()
@@ -50,6 +56,14 @@ public class Health : MonoBehaviour
     public void resetHealthToStart()
     {
         this.currentHealth = startingHealth;
+    }
+
+    public void beImmune(){
+        immune = true;
+    }
+
+    public void beNotImmune(){
+        immune = false;
     }
 
 }
