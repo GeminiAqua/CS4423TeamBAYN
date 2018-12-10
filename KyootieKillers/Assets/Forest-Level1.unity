@@ -3490,7 +3490,17 @@ Prefab:
     - target: {fileID: 114437212760605878, guid: ba23ac6a9f920324789e2e5dc353e25d,
         type: 2}
       propertyPath: immune
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114437212760605878, guid: ba23ac6a9f920324789e2e5dc353e25d,
+        type: 2}
+      propertyPath: startingHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114198513564745610, guid: ba23ac6a9f920324789e2e5dc353e25d,
+        type: 2}
+      propertyPath: damageAmount
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba23ac6a9f920324789e2e5dc353e25d, type: 2}

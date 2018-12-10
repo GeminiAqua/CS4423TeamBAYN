@@ -49,11 +49,7 @@ public class UnicornBossShooting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (gameObject.GetComponent<Health>().GetHealth() <= 0)
-        {
-            LoadScene sm = GetComponent<LoadScene>();
-            sm.LoadByIndex(2);
-        }
+        
 		if (target == null){
 
 			return;
