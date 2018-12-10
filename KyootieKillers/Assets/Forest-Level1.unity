@@ -2914,7 +2914,7 @@ MonoBehaviour:
   minExtent: {fileID: 1526910305}
   maxExtent: {fileID: 1526910305}
   m_Camera: {fileID: 0}
-  MobType: Unicorn Mob
+  MobType: Unicorn Mob/Unicorn Special
 --- !u!4 &1526910305
 Transform:
   m_ObjectHideFlags: 0
