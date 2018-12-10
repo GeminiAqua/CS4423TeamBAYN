@@ -54,12 +54,12 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void HitTarget() {
-		//GameObject effectInstance = Instantiate(impactEffect, transform.position, transform.rotation);
-		//Destroy(effectInstance, 2f);
+        //GameObject effectInstance = Instantiate(impactEffect, transform.position, transform.rotation);
+        //Destroy(effectInstance, 2f);
 
-
-
-		Debug.Log("hit");
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        p.gameObject.GetComponent<Health>().DecrementHealth(damage);
+        Debug.Log("hit");
 		seek = false;
 		Destroy(gameObject);
 	}
