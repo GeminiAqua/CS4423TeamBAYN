@@ -17,10 +17,19 @@ public class MobGenerator : MonoBehaviour
     private CameraFacingBillboard cfb;
     public string MobType;
     Object[] subListObjects;
+    public int enemynum = 0;
+    private bool start = false;
+    public GameObject boss;
+    public bool made = false;
 
 
+    private void Awake()
+    {
+        //boss.SetActive(false);
+    }
     void Start()
     {
+
         if (m_Camera == null){
             m_Camera = GetComponent<Camera>();
         }
@@ -42,6 +51,7 @@ public class MobGenerator : MonoBehaviour
         {
             SpawnRandomObject();
         }
+        start = true;
 
     }
 
@@ -61,7 +71,7 @@ public class MobGenerator : MonoBehaviour
                 Random.Range(minExtent.position.z, maxExtent.position.z));
 
         myObj = Instantiate(myListObjects[whichItem], pos, transform.rotation) as GameObject;
-       
+        enemynum++;
        // cfb.SetCamera(m_Camera);
 
         //myObj.transform.position = pos;
@@ -73,6 +83,17 @@ public class MobGenerator : MonoBehaviour
             // Debug.Log("Spawned mob");
             // SpawnRandomObject();
         // }
+
+        if (made)
+        {
+            return;
+        }
+        if(enemynum <= 0 && start)
+        {
+            Debug.Log("SPAWN BOSS");
+            boss.SetActive(true);
+            made = true;
+        }
     }
 
 }

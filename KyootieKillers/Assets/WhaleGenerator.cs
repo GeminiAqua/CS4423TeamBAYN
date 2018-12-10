@@ -7,15 +7,18 @@ public class WhaleGenerator : MonoBehaviour {
     public int numOfEnemies = 0;
     public int enemiesSpawned = 0;
     public string MobType;
+    public float startDelay;
+    public float spawnCooldown = 7f;
     Vector3 position;
     Quaternion rotation;
     // Use this for initialization
-    void Start () {
+    void Awake () {
         enemies = Resources.LoadAll<GameObject>(MobType);
-        SpawnEnemies(numOfEnemies);
+        startDelay = Random.Range(0, 11);
+        InvokeRepeating("SpawnEnemies", startDelay, spawnCooldown);
     }
 	
-    void SpawnEnemies(int numOfEnemies)
+    void SpawnEnemies()
     {
         position = transform.position;
         rotation = transform.rotation;
@@ -29,8 +32,4 @@ public class WhaleGenerator : MonoBehaviour {
         }
     }
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

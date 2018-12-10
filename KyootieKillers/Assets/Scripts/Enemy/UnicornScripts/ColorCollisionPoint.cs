@@ -30,7 +30,8 @@ public class ColorCollisionPoint : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(onFlower == true){
+        unicornBoss = GameObject.Find("Boss1");
+        if (onFlower == true){
 			startTime += Time.deltaTime;
 			//Debug.Log(startTime);
 		}if (cooldown == true) {

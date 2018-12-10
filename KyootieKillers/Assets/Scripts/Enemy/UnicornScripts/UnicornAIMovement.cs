@@ -15,6 +15,8 @@ public class UnicornAIMovement : MonoBehaviour
     public float damageCooldown = 1f;
     public bool isDamaging;
     bool hasSpecialAttack = false;
+    bool alive = true;
+    
 
 
     void Start()
@@ -32,6 +34,7 @@ public class UnicornAIMovement : MonoBehaviour
     {
         if (health.GetHealth() <= 0)
         {
+            alive = false;
             Die();
         }
         else
@@ -79,7 +82,7 @@ public class UnicornAIMovement : MonoBehaviour
 
         agent.SetDestination(transform.position);
         animator.SetInteger("animation", 10);
-
+        
         if (AnimationIsPlaying("Die") == false)
         {
             StartCoroutine(WaitForAnimation());
@@ -95,6 +98,10 @@ public class UnicornAIMovement : MonoBehaviour
     private IEnumerator WaitForAnimation()
     {
         yield return new WaitForSeconds(3);
+        if (!alive) {
+            GameObject gen = GameObject.FindGameObjectWithTag("GameController");
+            gen.GetComponent<MobGenerator>().enemynum--;
+        }
         Destroy(gameObject);
     }
 

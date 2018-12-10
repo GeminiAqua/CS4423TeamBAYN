@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour {
     
     public GodrickController hero;
-    public bool canDamage;
+    // public bool canDamage;
     public int damageAmount = 50;
     private float lastHit;
     private float cooldown = 0.1f;
@@ -14,11 +14,12 @@ public class WeaponScript : MonoBehaviour {
 	void Start () {
         hitSound = GetComponent<AudioSource>();
         lastHit = Time.timeSinceLevelLoad - cooldown;
+        // hero = gameObject.Find("
 	}
 	
-	void FixedUpdate () {
-		canDamage = hero.getCanAttackBool();
-	}
+	// void FixedUpdate () {
+		// canDamage = hero.getCanAttackBool();
+	// }
     
     private void OnTriggerEnter(Collider other){
         if (other.tag.Equals("Enemy") || other.tag.Equals("Boss")){
