@@ -16,6 +16,9 @@ public class AIScript : MonoBehaviour {
     bool canShoot = false;
     bool playerFound = false;
     public bool isShooter = false;
+    private Health HP;
+    private bool alreadyIncremented = false;
+    public GameObject manager;
 
     public float ShootForce = 1;
 
@@ -23,25 +26,29 @@ public class AIScript : MonoBehaviour {
     void Start () {
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        HP = gameObject.GetComponent<Health>();
+        manager = GameObject.Find("Level2Manager");
     }
 	
 	// Update is called once per frame
 	void Update () {
-        agent.SetDestination(target.position);
-        float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position);
-        agent.stoppingDistance = minDistance;
-        if (distanceToEnemy <= minDistance && shootTimer <= 0f)
-        {
-            canShoot = true;
-            Shoot();
-            canShoot = false;
-            shootTimer = 1f / shootRate;
+        if (!CheckDead()){
+            agent.SetDestination(target.position);
+            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position);
+            agent.stoppingDistance = minDistance;
+            if (distanceToEnemy <= minDistance && shootTimer <= 0f)
+            {
+                canShoot = true;
+                Shoot();
+                canShoot = false;
+                shootTimer = 1f / shootRate;
+            }
+            else
+            {
+                canShoot = false;
+            }
+            shootTimer -= Time.deltaTime;
         }
-        else
-        {
-            canShoot = false;
-        }
-        shootTimer -= Time.deltaTime;
     }
 
     private void Shoot()
@@ -85,6 +92,21 @@ public class AIScript : MonoBehaviour {
             Destroy(s);
         }
         yield return null;
+    }
+    
+    private bool CheckDead(){
+        if (HP.currentHealth <=0){
+            agent.speed = 0;
+            if (!alreadyIncremented){
+                alreadyIncremented = true;
+                manager.GetComponent<Level2ManagerScript>().IncrementCount();
+            }
+            Destroy(gameObject, 2f);
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

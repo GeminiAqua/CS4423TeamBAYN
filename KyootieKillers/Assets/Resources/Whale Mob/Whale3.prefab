@@ -218,9 +218,13 @@ GameObject:
   - component: {fileID: 95138342153122942}
   - component: {fileID: 114439409467667922}
   - component: {fileID: 195895932300980946}
+  - component: {fileID: 114253337898988034}
+  - component: {fileID: 114818693851368988}
+  - component: {fileID: 64745917237322906}
+  - component: {fileID: 54672639189243608}
   m_Layer: 0
   m_Name: Whale3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,7 +326,7 @@ Transform:
   m_GameObject: {fileID: 1465388719702936}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4547346757305164}
   - {fileID: 4915100334750394}
@@ -565,6 +569,35 @@ Transform:
   m_Father: {fileID: 4200398587326068}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54672639189243608
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465388719702936}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!64 &64745917237322906
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465388719702936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300002, guid: 4c0e4e37f6a34ad4f831602e12b341f9, type: 3}
 --- !u!95 &95138342153122942
 Animator:
   serializedVersion: 3
@@ -583,6 +616,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114253337898988034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465388719702936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23632244fc0ac4c4baf229922d084123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  immune: 0
 --- !u!114 &114439409467667922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -599,7 +646,22 @@ MonoBehaviour:
   spell: {fileID: 1571115759213054, guid: 3b111b7e516506e4a9d643ce174a92ae, type: 2}
   shootPoint: {fileID: 4639697157364920}
   shootRate: 0.5
+  isShooter: 0
+  manager: {fileID: 0}
   ShootForce: 1500
+--- !u!114 &114818693851368988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465388719702936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873a02cf0b292cf44aa035087bf1f1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAbleToBeKnockbacked: 1
+  rBody: {fileID: 0}
 --- !u!137 &137476049075503328
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
