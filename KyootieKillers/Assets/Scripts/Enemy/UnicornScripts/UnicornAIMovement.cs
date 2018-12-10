@@ -12,8 +12,8 @@ public class UnicornAIMovement : MonoBehaviour
     UnityEngine.AI.NavMeshAgent agent;
     Animator animator;
     Health health;
-    float damageCooldown = 1f;
-    bool isDamaging;
+    public float damageCooldown = 1f;
+    public bool isDamaging;
     bool hasSpecialAttack = false;
 
 
@@ -27,17 +27,18 @@ public class UnicornAIMovement : MonoBehaviour
         health = GetComponent<Health>();
         damageAmount = 10;
     }
-  
+
     void Update()
     {
-         if (health.GetHealth() <= 0)
+        if (health.GetHealth() <= 0)
         {
             Die();
         }
-        if (Vector3.Distance(rBody.transform.position, target.transform.position) > agent.stoppingDistance){
+        else
+        {
             FindPlayer();
         }
-       
+
     }
 
     private void FindPlayer()
@@ -45,21 +46,12 @@ public class UnicornAIMovement : MonoBehaviour
         //get distance 
         float dist = Vector3.Distance(transform.position, target.position);
         agent.SetDestination(target.position);
-<<<<<<< HEAD
-        // if (dist <= agent.stoppingDistance)
-        // {
-            // Attack();// move towards the target while avoiding things// move towards the target while avoiding things
-        // }
-        if (dist > agent.stoppingDistance) {
-=======
-        //agent.Warp(target.position);
         if (dist <= agent.stoppingDistance)
         {
             Attack();// move towards the target while avoiding things// move towards the target while avoiding things
         }
         else if (dist > agent.stoppingDistance)
         {
->>>>>>> d2400192d914612dd46d4b4e7233cebce02d335f
             Chasing();
         }
     }
@@ -67,9 +59,9 @@ public class UnicornAIMovement : MonoBehaviour
     void Chasing()
     {
 
-       
+
         animator.SetInteger("animation", 5);
-   
+
     }
     void Attack()
     {
@@ -82,45 +74,17 @@ public class UnicornAIMovement : MonoBehaviour
     }
     void Die()
     {
-		agent.Stop();
-        //Destroy(rBody);
+        agent.Stop();
         agent.SetDestination(transform.position);
         animator.SetInteger("animation", 10);
 
-        if(AnimationIsPlaying("Die") == false)
+        if (AnimationIsPlaying("Die") == false)
         {
             StartCoroutine(WaitForAnimation());
 
         }
     }
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("Weapon"))
-        {
-           // Debug.Log("there is a collision with" + collision.gameObject);
-            health.DecrementHealth(10);
-        }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("Player") && isDamaging)
-        {
-            float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
-            if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown)){
-                Debug.Log("Player recently took damage. Can't deal damage yet");
-            } else {
-                collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
-                isDamaging = false;
-                Invoke("canDamage", damageCooldown);
-                Attack();
-                int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
-               
-                collision.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
-                Debug.Log(gameObject.name + " did " + damageAmount + " damage");
-            }
-        }
-    }
     bool AnimationIsPlaying(string animation)
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName(animation);
@@ -131,10 +95,9 @@ public class UnicornAIMovement : MonoBehaviour
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
-    
-    void canDamage(){
+
+    void canDamage()
+    {
         isDamaging = true;
     }
 }
-
-
