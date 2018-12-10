@@ -1323,6 +1323,7 @@ MonoBehaviour:
   attackRange: 15
   damagePerShot: 20
   cooldown: 3
+  shootRayDir: {x: 0, y: 0, z: 0}
 --- !u!114 &114146820473946122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1715,7 +1716,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 125
-  m_StoppingDistance: 10
+  m_StoppingDistance: 20
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

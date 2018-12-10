@@ -22,6 +22,9 @@ public class UnicornBeam : MonoBehaviour
     Rigidbody rb;
     Animator animator;
 
+    [SerializeField]
+    Vector3 shootRayDir;
+
 
     // Use this for initialization
     void Start () {
@@ -75,28 +78,30 @@ public class UnicornBeam : MonoBehaviour
         //  Enable the line renderer and set it's first position to be the end of the gun.
         laserLine.enabled = true;
         laserLine.SetPosition(0, new Vector3(0,0,0));
-        laserLine.SetPosition(1, new Vector3(0, 15, attackRange));
+        laserLine.SetPosition(1, new Vector3(0, rb.position.y*3.6f, attackRange));
+     
 
         // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
         shootRay.origin = laserLine.transform.position;
 
-        //endPointOfRay = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(0, 3, 15);
-  
-        shootRay.direction = new Vector3(0, 1.5f, 0) + player.transform.position;
 
-        Debug.DrawRay(shootRay.origin, shootRay.direction * 100f, Color.yellow,10);
+        // shootRay.direction = new Vector3(0, 1.5f, 0) + player.transform.position;
+        shootRayDir = player.transform.position - transform.position + new Vector3(0, .5f, 0);
+        shootRay.direction = shootRayDir;
+       // shootRay.direction = player.transform.position - transform.position + new Vector3(0, 1f, 0);
+
+        Debug.DrawRay(shootRay.origin, shootRayDir * 100f, Color.yellow,10);
         // Perform the raycast against gameobjects on the shootable layer and if it hits something...
         if (Physics.Raycast(shootRay, out shootHit, attackRange))
-        {
+            {
 
-            //    // Try and find an EnemyHealth script on the gameobject hit.
-            Health playerHealth = shootHit.collider.GetComponent<Health>();
+                //    // Try and find an EnemyHealth script on the gameobject hit.
+                Health playerHealth = shootHit.collider.GetComponent<Health>();
             Debug.Log("Player Hit!!!: " + shootHit.collider);
             //    // If the EnemyHealth component exist...
             if (playerHealth != null)
             {
-                //        Debug.Log("Enemy Health is null");
-                //        // ... the enemy should take damage.
+              
                 playerHealth.DecrementHealth(damagePerShot);
                 //        //shootHit.point
                 //        //hitParticles.transform.position = hitPoint;

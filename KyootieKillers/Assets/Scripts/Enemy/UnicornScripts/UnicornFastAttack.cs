@@ -87,6 +87,25 @@ public class UnicornFastAttack : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         //Decrement Health
-        Debug.Log("Decrement Health");
+        //Debug.Log("Decrement Health");
+        //if (collision.gameObject.tag.Equals("Player") && isDamaging)
+        //{
+        //    float damageTime = collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage;
+        //    if (Time.timeSinceLevelLoad < (damageTime + collision.gameObject.GetComponent<GodrickController>().takeDamageCooldown))
+        //    {
+        //        Debug.Log("Player recently took damage. Can't deal damage yet");
+        //    }
+        //    else
+        //    {
+        //        collision.gameObject.GetComponent<GodrickController>().timeLastTookDamage = Time.timeSinceLevelLoad;
+        //        isDamaging = false;
+        //        Invoke("canDamage", damageCooldown);
+        //        Attack();
+        //        int playeHealth = collision.gameObject.GetComponent<Health>().GetHealth();
+
+        //        collision.gameObject.GetComponent<Health>().DecrementHealth(damageAmount);
+        //        Debug.Log(gameObject.name + " did " + damageAmount + " damage");
+        //    }
+        //}
     }
 }
